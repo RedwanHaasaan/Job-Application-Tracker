@@ -1,1 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap');
 @import "tailwindcss";
+
+@layer base {
+    html{
+       scroll-behavior: smooth; 
+    }
+    body{
+        font-family: "Geist", sans-serif;
+    }
+}
+@layer utilities {
+    .bg-custom{
+        background-color: #F8FAFC;
+    }
+}
