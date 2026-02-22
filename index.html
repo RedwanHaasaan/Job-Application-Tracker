@@ -9,9 +9,24 @@
     <link rel="shortcut icon" href="./assets/job-seeker.png" type="image/x-icon">
     <title>Job Application Tracker</title>
 </head>
-<body>
-
-
+<body class="bg-custom min-h-screen">
+    <header class="py-10 px-5 md:px-20 lg:px-40 xl:px-60 xl:py-14 flex flex-col gap-4">
+        <h1 class="font-bold text-2xl md:text-3xl lg:text-4xl text-darkblue">Job Application Tracker</h1>
+        <section id="stat-section" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="p-5 flex flex-col bg-white rounded-lg shadow hover:border hover:border-blue-500 transform transition duration-200 hover:scale-110 max-w-md">
+                <span class="text-sm font-medium text-gray-900">Total</span>
+                <span class="text-2xl font-bold text-black">0</span>
+            </div>
+            <div class="p-5 flex flex-col bg-white rounded-lg shadow hover:border hover:border-green-500 transform transition duration-200 hover:scale-110 max-w-md">
+                <span class="text-sm font-medium text-gray-900">Interview</span>
+                <span class="text-2xl font-bold text-green-500">0</span>
+            </div>
+            <div class="p-5 flex flex-col bg-white rounded-lg shadow hover:border hover:border-red-500 transform transition duration-200 hover:scale-110 max-w-md">
+                <span class="text-sm font-medium text-gray-900">Rejected</span>
+                <span class="text-2xl font-bold text-red-500">0</span>
+            </div>
+        </section>
+    </header>
     <script src="./javascripts/main.js"></script>
 </body>
 </html>
