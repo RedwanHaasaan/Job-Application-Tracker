@@ -137,7 +137,7 @@ function renderJobPosts(filter = "All") {
       const status = normalizeStatus(job.status);
       const post = document.createElement("div");
       post.className =
-        "p-6 bg-white border-l-4 border-gray-200 rounded-md shadow-xs flex flex-col gap-5 transform transition duration-200 hover:scale-105";
+        "p-4 md:p-6 bg-white border-l-4 border-gray-200 rounded-md shadow-xs flex flex-col gap-5 transform transition duration-200 hover:scale-105";
       post.setAttribute("data-jobid", job.jobId);
       post.innerHTML = `
             <div class="flex flex-row justify-between">
@@ -150,7 +150,7 @@ function renderJobPosts(filter = "All") {
                             class="job-delete-btn fa-regular fa-trash-can p-2 bg-white border border-gray-200 rounded-full text-gray-500 hover:text-red-500 transform transition duration-200 hover:scale-110"></i>
                         </div>
                     </div>
-                    <div class="flex flex-row gap-5 text-gray-500 text-base font-normal">
+                    <div class="flex flex-col md:flex-row gap-5 text-gray-500 text-base font-normal">
                         <span>• ${job.location}</span>
                         <span>• ${job.jobType}</span>
                         <span>• ${job.salaryRange}</span>
@@ -186,15 +186,15 @@ function renderJobPosts(filter = "All") {
     });
   } else {
     const emptyCar = document.createElement("div");
-    emptyCar.className = "bg-white px-10 py-16 flex flex-col gap-5 rounded-lg";
+    emptyCar.className = "bg-white px-6 py-12 flex flex-col gap-5 rounded-lg";
     emptyCar.innerHTML = `
-                        <div class="mx-auto">
-                        <img src="./assets/documents.png" alt="Documents">
-                    </div>
-                    <div class="mx-auto text-center">
-                        <h1 class="text-2xl font-semibold text-darkblue">No jobs available</h1>
-                        <p class="text-base text-gray-500">Check back soon for new job opportunities</p>
-                    </div>
+              <div class="mx-auto">
+              <img class="w-25 mx-auto" src="./assets/documents.png" alt="Documents">
+            </div>
+            <div class="mx-auto text-center px-4">
+              <h1 class="text-2xl md:text-3xl font-semibold text-darkblue">No jobs available</h1>
+              <p class="text-base text-gray-500">Check back soon for new job opportunities</p>
+            </div>
     `;
     jobPostsContainer.appendChild(emptyCar);
   }
