@@ -52,14 +52,25 @@
                     class="btn w-full sm:w-auto px-8 btn-outline border-gray-200 text-gray-500  hover:text-red-500 hover:border-red-500 bg-white">Rejected</button>
             </div>
             <div id="jobPost-container" class="flex flex-col gap-4">
-                <!-- All Job Cards -->
+                <!-- All Job Cards & if no Job cards then the job post section -->
                 
-                <!-- If no card in array -->
-
             </div>
         </section>
     </main>
-    <script src="./javascripts/main.js"></script>
+        <!-- Delete confirmation modal-->
+        <input type="checkbox" id="delete-modal-toggle" class="modal-toggle" />
+        <div class="modal">
+            <div class="modal-box max-w-md">
+                <h3 class="font-bold text-lg">Confirm delete</h3>
+                <p id="delete-modal-text" class="py-4">Are you sure you want to delete this job post?</p>
+                <div class="modal-action">
+                    <label for="delete-modal-toggle" id="delete-cancel-btn" class="btn">Cancel</label>
+                    <button id="delete-confirm-btn" class="btn btn-error text-white">Delete</button>
+                </div>
+            </div>
+        </div>
+
+        <script src="./javascripts/main.js"></script>
 </body>
 
 </html>

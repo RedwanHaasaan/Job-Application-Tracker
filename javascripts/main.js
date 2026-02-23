@@ -96,6 +96,13 @@ const interviewCountElement = document.getElementById("interviewCount");
 const rejectedCountElement = document.getElementById("rejectedCount");
 const availableJobsCountElement = document.getElementById("availableJobsCount");
 
+// delete modal elements
+const deleteModalToggle = document.getElementById("delete-modal-toggle");
+const deleteModalText = document.getElementById("delete-modal-text");
+const deleteConfirmBtn = document.getElementById("delete-confirm-btn");
+const deleteCancelBtn = document.getElementById("delete-cancel-btn");
+let pendingDeleteId = null;
+
 function normalizeStatus(statusValue) {
   if (!statusValue) return "Not Applied";
   const lower = String(statusValue).toLowerCase();
@@ -133,11 +140,13 @@ function renderJobPosts(filter = "All") {
   }
 
   if (filteredJobs.length !== 0) {
-    filteredJobs.forEach((job) => {
+    filteredJobs.forEach((job, index) => {
       const status = normalizeStatus(job.status);
       const post = document.createElement("div");
       post.className =
-        "p-4 md:p-6 bg-white border-l-4 border-gray-200 rounded-md shadow-xs flex flex-col gap-5 transform transition duration-200 hover:scale-105";
+        "p-4 md:p-6 bg-white border-l-4 border-gray-200 rounded-md shadow-xs flex flex-col gap-5 card card-hover card-enter";
+      // animation
+      post.style.animationDelay = (index * 60) + "ms";
       post.setAttribute("data-jobid", job.jobId);
       post.innerHTML = `
             <div class="flex flex-row justify-between">
@@ -198,7 +207,7 @@ function renderJobPosts(filter = "All") {
     `;
     jobPostsContainer.appendChild(emptyCar);
   }
-  // update counts (visible jobs = filteredJobs length)
+  // update counts (jobs = filteredJobs.length)
   updateCounts(filteredJobs.length);
 }
 
@@ -208,7 +217,6 @@ const interviewFilterBtn = document.getElementById("interviewBtn");
 const rejectedFilterBtn = document.getElementById("rejectedBtn");
 
 //helper Function
-
 function setActiveFilterButton(activeBtn) {
   const buttons = [allFilterBtn, interviewFilterBtn, rejectedFilterBtn];
   // reset all buttons to default gray
@@ -259,19 +267,22 @@ jobPostsContainer.addEventListener("click", function (event) {
   const deleteBtnClick = event.target.closest(".job-delete-btn");
 
   if (deleteBtnClick) {
-    const id = deleteBtnClick.dataset.jobid;
-    const idx = totalJobs.findIndex((jobItem) => String(jobItem.jobId) === String(id));
-    if (idx > -1) {
-      totalJobs.splice(idx, 1);
-      renderJobPosts(activeFilter);
-      updateCounts();
+    const deleteJobId = deleteBtnClick.dataset.jobid;
+    pendingDeleteId = deleteJobId;
+    // show job company in modal
+    const jobForModal = totalJobs.find(function (jobItem) { return String(jobItem.jobId) === String(deleteJobId); });
+    if (jobForModal && deleteModalText) {
+      deleteModalText.textContent = 'Delete "' + jobForModal.companyName + '"? This cannot be undone.';
+    }
+    if (deleteModalToggle) {
+      deleteModalToggle.checked = true; // open modal
     }
     return;
   }
 
   if (interviewBtnClick) {
-    const id = interviewBtnClick.dataset.jobid;
-    const job = totalJobs.find((jobItem) => String(jobItem.jobId) === String(id));
+    const interviewJobId = interviewBtnClick.dataset.jobid;
+    const job = totalJobs.find((jobItem) => String(jobItem.jobId) === String(interviewJobId));
     if (job) {
       job.status = "Interview";
       renderJobPosts(activeFilter);
@@ -280,8 +291,8 @@ jobPostsContainer.addEventListener("click", function (event) {
   }
 
   if (rejectedBtnClick) {
-    const id = rejectedBtnClick.dataset.jobid;
-    const job = totalJobs.find((jobItem) => String(jobItem.jobId) === String(id));
+    const rejectedJobId = rejectedBtnClick.dataset.jobid;
+    const job = totalJobs.find((jobItem) => String(jobItem.jobId) === String(rejectedJobId));
     if (job) {
       job.status = "Rejected";
       renderJobPosts(activeFilter);
@@ -293,3 +304,26 @@ jobPostsContainer.addEventListener("click", function (event) {
 // initial render
 setActiveFilterButton(allFilterBtn);
 renderJobPosts();
+
+// delete confirm handler
+if (deleteConfirmBtn) {
+  deleteConfirmBtn.addEventListener('click', function () {
+    if (!pendingDeleteId) return;
+    const jobIndex = totalJobs.findIndex(function (jobItem) { return String(jobItem.jobId) === String(pendingDeleteId); });
+    if (jobIndex > -1) {
+      totalJobs.splice(jobIndex, 1);
+      // close modal
+      if (deleteModalToggle) deleteModalToggle.checked = false;
+      pendingDeleteId = null;
+      renderJobPosts(activeFilter);
+      updateCounts();
+    }
+  });
+}
+
+// cancel clears pending id
+if (deleteCancelBtn) {
+  deleteCancelBtn.addEventListener('click', function () {
+    pendingDeleteId = null;
+  });
+}
