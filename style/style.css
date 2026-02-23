@@ -16,4 +16,7 @@
     .text-darkblue{
         color: #002C5C;
     }
+    .bg-status{
+        background-color: #EEF4FF;
+    }
 }
