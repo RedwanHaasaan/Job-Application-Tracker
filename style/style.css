@@ -19,4 +19,7 @@
     .bg-status{
         background-color: #EEF4FF;
     }
+    .Btn-active{
+       background-color: red; 
+    }
 }
