@@ -1,5 +1,15 @@
 # 📘 JavaScript DOM & Events Assignment
 
+## � Job Application Tracker
+
+**Description:** A comprehensive web application built with HTML, Tailwind CSS, and JavaScript to help users track and manage their job applications. This project demonstrates practical implementation of JavaScript DOM manipulation and event handling concepts.
+
+## �🔗 Live Link
+
+**Project Demo:** [https://redwanhaasaan.github.io/Job-Application-Tracker/](https://redwanhaasaan.github.io/Job-Application-Tracker/)
+
+---
+
 ## Question 1: What is the difference between getElementById, getElementsByClassName, and querySelector / querySelectorAll?
 
 ### Answer
